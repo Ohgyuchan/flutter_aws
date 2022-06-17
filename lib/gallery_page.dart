@@ -15,20 +15,20 @@ class GalleryPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Gallery'),
+        title: const Text('Gallery'),
         actions: [
           // 4
           // Log Out Button
           Padding(
             padding: const EdgeInsets.all(8),
-            child:
-                GestureDetector(child: Icon(Icons.logout), onTap: shouldLogOut),
+            child: GestureDetector(
+                onTap: shouldLogOut, child: const Icon(Icons.logout)),
           )
         ],
       ),
       // 5
       floatingActionButton: FloatingActionButton(
-          child: Icon(Icons.camera_alt), onPressed: shouldShowCamera),
+          child: const Icon(Icons.camera_alt), onPressed: shouldShowCamera),
       body: Container(child: _galleryGrid()),
     );
   }
@@ -37,11 +37,11 @@ class GalleryPage extends StatelessWidget {
     // 6
     return GridView.builder(
         gridDelegate:
-            SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+            const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
         itemCount: 3,
         itemBuilder: (context, index) {
           // 7
-          return Placeholder();
+          return const Placeholder();
         });
   }
 }

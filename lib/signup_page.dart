@@ -48,7 +48,7 @@ class _SignUpPageState extends State<SignUpPage> {
         TextField(
           controller: _emailController,
           decoration:
-              InputDecoration(icon: const Icon(Icons.mail), labelText: 'Email'),
+              const InputDecoration(icon: Icon(Icons.mail), labelText: 'Email'),
         ),
 
         // Password TextField

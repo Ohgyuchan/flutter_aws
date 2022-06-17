@@ -18,10 +18,10 @@ class _CameraFlowState extends State<CameraFlow> {
   List<MaterialPage> get _pages {
     return [
       // Show Gallery Page
-      MaterialPage(child: Placeholder()),
+      const MaterialPage(child: Placeholder()),
 
       // Show Camera Page
-      if (_shouldShowCamera) MaterialPage(child: Placeholder())
+      if (_shouldShowCamera) const MaterialPage(child: Placeholder())
     ];
   }
 
@@ -35,9 +35,10 @@ class _CameraFlowState extends State<CameraFlow> {
   }
 
   // 5
+  // ignore: unused_element
   void _toggleCameraOpen(bool isOpen) {
     setState(() {
-      this._shouldShowCamera = isOpen;
+      _shouldShowCamera = isOpen;
     });
   }
 }
