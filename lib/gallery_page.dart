@@ -28,7 +28,7 @@ class GalleryPage extends StatelessWidget {
       ),
       // 5
       floatingActionButton: FloatingActionButton(
-          child: const Icon(Icons.camera_alt), onPressed: shouldShowCamera),
+          onPressed: shouldShowCamera, child: const Icon(Icons.camera_alt)),
       body: Container(child: _galleryGrid()),
     );
   }
