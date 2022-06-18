@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_aws/login_page.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({Key? key}) : super(key: key);
@@ -26,7 +27,9 @@ class _SignUpPageState extends State<SignUpPage> {
             Container(
               alignment: Alignment.bottomCenter,
               child: TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.of(context).push(_createRoute());
+                  },
                   child: const Text('Already have an account? Login.')),
             )
           ])),
@@ -79,5 +82,15 @@ class _SignUpPageState extends State<SignUpPage> {
       print('email: $email');
       print('password: $password');
     }
+  }
+
+  Route _createRoute() {
+    return PageRouteBuilder(
+      pageBuilder: (context, animation, secondaryAnimation) =>
+          const LoginPage(),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        return child;
+      },
+    );
   }
 }

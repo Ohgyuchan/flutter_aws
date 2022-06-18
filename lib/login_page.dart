@@ -30,7 +30,9 @@ class _LoginPageState extends State<LoginPage> {
             Container(
               alignment: Alignment.bottomCenter,
               child: TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
                   child: const Text('Don\'t have an account? Sign up.')),
             )
           ])),
