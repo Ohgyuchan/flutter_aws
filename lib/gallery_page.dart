@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 // 1
 class GalleryPage extends StatelessWidget {
   // 2
   final VoidCallback shouldLogOut;
-  // 3
-  final VoidCallback shouldShowCamera;
 
-  const GalleryPage(
-      {Key? key, required this.shouldLogOut, required this.shouldShowCamera})
-      : super(key: key);
+  const GalleryPage({Key? key, required this.shouldLogOut}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -28,9 +25,18 @@ class GalleryPage extends StatelessWidget {
       ),
       // 5
       floatingActionButton: FloatingActionButton(
-          onPressed: shouldShowCamera, child: const Icon(Icons.camera_alt)),
+          onPressed: () async {
+            await getImage();
+          },
+          child: const Icon(Icons.camera_alt)),
       body: Container(child: _galleryGrid()),
     );
+  }
+
+  Future<XFile?> getImage() async {
+    final _pickedImage =
+        await ImagePicker().pickImage(source: ImageSource.camera);
+    return _pickedImage;
   }
 
   Widget _galleryGrid() {
