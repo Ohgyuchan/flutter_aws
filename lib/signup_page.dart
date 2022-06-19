@@ -1,9 +1,17 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_aws/login_page.dart';
+
+import 'credentials/auth_credentials.dart';
 
 class SignUpPage extends StatefulWidget {
-  const SignUpPage({Key? key}) : super(key: key);
+  final VoidCallback shouldShowLogin;
+  final ValueChanged<SignUpCredentials> didProvideCredentials;
+
+  const SignUpPage(
+      {Key? key,
+      required this.shouldShowLogin,
+      required this.didProvideCredentials})
+      : super(key: key);
 
   @override
   State<StatefulWidget> createState() => _SignUpPageState();
@@ -26,10 +34,8 @@ class _SignUpPageState extends State<SignUpPage> {
             // Login Button
             Container(
               alignment: Alignment.bottomCenter,
-              child: TextButton(
-                  onPressed: () {
-                    Navigator.of(context).push(_createRoute());
-                  },
+              child: OutlinedButton(
+                  onPressed: widget.shouldShowLogin,
                   child: const Text('Already have an account? Login.')),
             )
           ])),
@@ -64,7 +70,7 @@ class _SignUpPageState extends State<SignUpPage> {
         ),
 
         // Sign Up Button
-        TextButton(
+        OutlinedButton(
           onPressed: _signUp,
           child: const Text('Sign Up'),
         )
@@ -82,15 +88,9 @@ class _SignUpPageState extends State<SignUpPage> {
       print('email: $email');
       print('password: $password');
     }
-  }
 
-  Route _createRoute() {
-    return PageRouteBuilder(
-      pageBuilder: (context, animation, secondaryAnimation) =>
-          const LoginPage(),
-      transitionsBuilder: (context, animation, secondaryAnimation, child) {
-        return child;
-      },
-    );
+    final credentials =
+        SignUpCredentials(username: username, email: email, password: password);
+    widget.didProvideCredentials(credentials);
   }
 }
