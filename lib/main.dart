@@ -1,7 +1,7 @@
-import 'dart:developer';
-
-import 'package:camera/camera.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:amplify_flutter/amplify_flutter.dart';
+import 'package:flutter_aws/amplifyconfiguration.dart';
 import 'package:flutter_aws/services/auth_service.dart';
 import 'package:flutter_aws/verification_page.dart';
 
@@ -9,14 +9,8 @@ import 'camera_flow.dart';
 import 'login_page.dart';
 import 'signup_page.dart';
 
-List<CameraDescription> cameras = [];
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  try {
-    cameras = await availableCameras();
-  } on CameraException catch (e) {
-    log(e.code);
-  }
 
   runApp(const MyApp());
 }
@@ -30,11 +24,13 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  final _amplify = Amplify;
   final _authService = AuthService();
 
   @override
   void initState() {
     super.initState();
+    _configureAmplify();
     _authService.showLogin();
   }
 
@@ -98,5 +94,18 @@ class _MyAppState extends State<MyApp> {
         },
       ),
     );
+  }
+
+  void _configureAmplify() async {
+    try {
+      await _amplify.configure(amplifyconfig);
+      if (kDebugMode) {
+        print('Successfully configured Amplify 🎉');
+      }
+    } catch (e) {
+      if (kDebugMode) {
+        print('Could not configure Amplify ☠️');
+      }
+    }
   }
 }
