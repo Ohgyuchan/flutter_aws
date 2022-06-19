@@ -1,4 +1,9 @@
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_aws/main.dart';
+
+import 'camera_page.dart';
+import 'gallery_page.dart';
 
 class CameraFlow extends StatefulWidget {
   // 1
@@ -12,7 +17,13 @@ class CameraFlow extends StatefulWidget {
 
 class _CameraFlowState extends State<CameraFlow> {
   // 2
+  final CameraDescription _camera = cameras.first;
   bool _shouldShowCamera = false;
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   // 3
   List<MaterialPage> get _pages {
@@ -20,8 +31,23 @@ class _CameraFlowState extends State<CameraFlow> {
       // Show Gallery Page
       const MaterialPage(child: Placeholder()),
 
+      MaterialPage(
+        child: GalleryPage(
+          shouldLogOut: widget.shouldLogOut,
+          shouldShowCamera: () => _toggleCameraOpen(true),
+        ),
+      ),
+
       // Show Camera Page
-      if (_shouldShowCamera) const MaterialPage(child: Placeholder())
+      if (_shouldShowCamera)
+        MaterialPage(
+          child: CameraPage(
+            camera: _camera,
+            didProvideImagePath: (imagePath) {
+              _toggleCameraOpen(false);
+            },
+          ),
+        ),
     ];
   }
 
@@ -35,10 +61,17 @@ class _CameraFlowState extends State<CameraFlow> {
   }
 
   // 5
-  // ignore: unused_element
   void _toggleCameraOpen(bool isOpen) {
     setState(() {
       _shouldShowCamera = isOpen;
     });
   }
+
+  // void _getCamera() async {
+  //   final camerasList = await availableCameras();
+  //   setState(() {
+  //     final firstCamera = camerasList.first;
+  //     _camera = firstCamera;
+  //   });
+  // }
 }
